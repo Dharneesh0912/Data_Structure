@@ -13,10 +13,41 @@ public class Graph {
 		matrix[desc][src]=1;
 	}
 	public static void bfs(int start) {
-		boolean arr[]=new boolean[vertices];
+		boolean visited[]=new boolean[vertices];
 		Queue<Integer> queue=new LinkedList<>();
+		visited[start]=true;
+		queue.add(start);
+		while(!queue.isEmpty()) {
+			int current=queue.poll();
+			System.out.print(current+" ");
+			for(int i=0;i<vertices;i++) {
+				if(matrix[current][i]==1 && !visited[i]) {
+					visited[i]=true;
+					queue.add(i);
+					
+				}
+			}
+		}
+		System.out.println();
+		System.out.println();
 
 	}
+	public static void dfsutil(int start,boolean visited[]) {
+		visited[start]=true;
+		System.out.print(start+" ");
+		for(int i=0;i<vertices;i++) {
+			if(matrix[start][i]==1 && !visited[i]) {
+				dfsutil(i,visited);
+			}
+		}
+	}
+	public static void dfs(int start) {
+		boolean[] visited=new boolean[vertices];
+		dfsutil(start,visited);
+		System.out.println();
+		System.out.println();
+	}
+
 	public static void print() {
 		for(int i=0;i<vertices;i++) {
 			for(int j=0;j<vertices;j++) {
@@ -32,9 +63,10 @@ public class Graph {
 		addedges(1,3);
 		addedges(2,3);
 		addedges(3,4);
-		print();
-	
+		bfs(0);
+		dfs(0);
+		print();	
 	}
-
-
 }
+}
+
