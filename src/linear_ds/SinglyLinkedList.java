@@ -1,113 +1,169 @@
-package linear_ds;
-import java.util.*;
+package Linear;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 class Node{
-	int value;
-	Node Next;
-	public Node(int value) {
-		this.value=value;
-		Next=null;
+	int data;
+	Node next;
+	public Node(int data) {
+		this.data=data;
+		next=null;
+	}
+}
+class Node1{
+	int data1;
+	Node1 next1;
+	public Node1(int data) {
+		this.data1=data;
+		next1=null;
 	}
 }
 class operations{
 	static Node head=null;
-	public static void InsertAtBeggining(int value) {
-		Node newnode=new Node(value);
+	static Node1 head1=null;
+	public static void InsertAtBegin(int data) {
+		Node newnode=new Node(data);
+		Node temp=head;
 		if(head==null) {
 			head=newnode;
+			newnode.next=null;
 			return;
 		}
-		else{
-			newnode.Next=head;
-			head=newnode;
-		}
+		newnode.next=temp;
+		head=newnode;
 	}
-	public static void InsertAtEnd(int value){
-		Node newnode=new Node(value);
-		if(head==null) {
-			head=newnode;
+	public static void InsertAtBegin1(int data) {
+		Node1 newnode1=new Node1(data);
+		Node1 temp1=head1;
+		if(head1==null) {
+			head1=newnode1;
+			newnode1.next1=null;
 			return;
 		}
-		else {
-			Node temp=head;
-			while(temp.Next!=null) {
-				temp=temp.Next;
-			}
-			temp.Next=newnode;
-			newnode.Next=null;
-		}
+		newnode1.next1=temp1;
+		head1=newnode1;
 	}
-	public static void InsertAtPosition(int value,int position) {
-		Node newnode=new Node(value);
-		int place=0;
-		Node temp1=head;
-		while(temp1!=null) {
-			place++;
-			if(place==(position-1)) {
-				Node temp2=temp1.Next;
-				temp1.Next=newnode;
-				newnode.Next=temp2;
-			}
-			else {
-				temp1=temp1.Next;
-				
-			}
+	public static void InsertAtEnd(int data) {
+		Node newnode=new Node(data);
+		Node temp=head;
+		while(temp.next!=null) {
+			temp=temp.next;
 		}
+		temp.next=newnode;
+	}
+	public static void DeleteAtBegin() {
+		Node temp=head;
+		Node temp1=temp.next;
+		temp.next=null;
+		head=temp1;
+		
 	}
 	public static void DeleteAtEnd() {
 		Node temp=head;
-		while(temp.Next!=null) {
-			if(temp.Next.Next==null) {
-				temp.Next=null;
-			}
-			else {
-				temp=temp.Next;
-			}
+		while(temp.next.next!=null) {
+			temp=temp.next;
 		}
-	}
-	public static void DeleteAtBeggining() {
-		Node temp=head;
-		head=head.Next;
+		temp.next=null;
 	}
 	public static void DeleteAtPosition(int position) {
+		int count=0;
 		Node temp=head;
-		int place=0;
-		while(temp!=null) {
-			place++;
-			if(place==(position-1)) {
-				temp.Next=temp.Next.Next;
-			}
-			else {
-				temp=temp.Next;
-			}
+		if(position==1) {
+			DeleteAtBegin();
 		}
+		while(temp!=null) {
+			count++;
+			if(count==(position-1)) {
+				temp.next=temp.next.next;
+				return;
+			}
+			temp=temp.next;
+		}
+		
+	}
+	public static void DeleteByElement(int data) {
+		Node temp=head;
+		while(temp.next.data!=data) {
+			temp=temp.next;
+		}
+		temp.next=temp.next.next;
+		
+	}
+	public static void Sort() {
+		List<Integer> lst=new ArrayList<>();
+		Node temp=head;
+		head=null;
+		while(temp!=null) {
+			lst.add(temp.data);
+			temp=temp.next;
+		}
+		Collections.sort(lst);
+		for(int i=0;i<lst.size();i++) {
+			InsertAtBegin(lst.get(i));
+		}
+	}
+	public static void HigherElement() {
+		Sort();
+		head.next=null;
+		
+	}
+	public static void LowestElement() {
+		Sort();
+		Node temp=head;
+		while(temp.next!=null) {
+			temp=temp.next;
+		}
+		head=temp;
 	}
 	public static void display() {
 		Node temp=head;
-		while(temp!=null) {
-			System.out.print(temp.value+"-->");
-			temp=temp.Next;
+		if(temp==null) {
+			System.out.print("Empty list");
 		}
-		
+		while(temp!=null) {
+			System.out.print(temp.data+"--->");
+			temp=temp.next;
+		}
+		System.out.print("null");
 	}
-
-	
+	public static void display1() {
+		Node1 temp1=head1;
+		if(temp1==null) {
+			System.out.print("Empty list");
+		}
+		while(temp1!=null) {
+			System.out.print(temp1.data1+"--->");
+			temp1=temp1.next1;
+		}
+		System.out.print("null");
+	}
 }
-public class SinglyLinkedList extends operations {
+public class SinglyLinkedList extends operations{
 	public static void main(String[] args) {
-		Scanner sc=new Scanner(System.in);
-		InsertAtBeggining(23);
-		InsertAtBeggining(10);
-		InsertAtBeggining(50);
-		InsertAtBeggining(90);
-		InsertAtBeggining(110);
-		InsertAtBeggining(106);
-		InsertAtEnd(24);
-		InsertAtPosition(20,3);
-		DeleteAtEnd();
-		DeleteAtBeggining();
-		DeleteAtPosition(2);
+		InsertAtBegin(10);
+		InsertAtBegin(20);
+		InsertAtBegin(30);
+		InsertAtBegin(40);
+		InsertAtBegin(50);
+		InsertAtEnd(60);
+		InsertAtBegin1(70);
+		InsertAtBegin1(80);
+		InsertAtBegin1(90);
+		InsertAtBegin1(100);
+		InsertAtBegin1(110);
+		//DeleteAtPosition(1);
+		//DeleteAtEnd();
+		//DeleteByElement(30);
+		//Sort();
+		//HigherElement();
+		//LowestElement();
 		display();
-		
+		System.out.println();
+		display1();
+
+
 	}
 
 }
